@@ -6,7 +6,7 @@ const someSeconds = (itemDate: DateInterval): boolean => itemDate.day === 0 && i
 
 const someMinutes = (itemDate: DateInterval): boolean => itemDate.day === 0 && itemDate.hour === 0 && itemDate.minute >= 0 && itemDate.minute < 60;
 
-const someHours = (itemDate: DateInterval): boolean => itemDate.day === 0 && itemDate.hour > 0 && itemDate.hour >= 0 && itemDate.hour < 12;
+const someHours = (itemDate: DateInterval): boolean => itemDate.day === 0 && itemDate.hour > 0 && itemDate.hour < 12;
 
 const today = (itemDate: DateInterval): boolean => (new Date()).toDateString() === itemDate.date.toDateString();
 

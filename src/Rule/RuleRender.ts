@@ -1,4 +1,7 @@
 export default class RuleRender {
-  public constructor(public render: string, public nextUpdate: Date | null | undefined) {
+  public constructor(
+    public readonly render: string,
+    public readonly nextUpdate: Date | null | undefined
+  ) {
   }
 }
