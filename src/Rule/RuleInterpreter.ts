@@ -88,8 +88,10 @@ class RuleInterpreter {
         return diff.minute.toString();
       case 'ds':
         return diff.second.toString();
-      default:
-        return DateFormatter.getValueFromSymbol(symbol, diff.date, locale);
+      default: {
+        const result = DateFormatter.format(`%${symbol}`, diff.date, locale);
+        return result !== `%${symbol}` ? result : null;
+      }
     }
   }
 }
