@@ -6,9 +6,14 @@ export default class ConfigurationValidator {
       return new Error('Refresh value must be a number.');
     }
 
-    for (const rule of config.rules) {
-      if (!rule.condition || !rule.text || typeof rule.text !== 'object') {
-        return new Error('A rule must be composed of a condition and a corresponding text keys.');
+    if (!config.selector || typeof config.selector !== 'string') {
+      return new Error('Selector must be a non-empty string.');
+    }
+
+    for (let i = 0; i < config.rules.length; i++) {
+      const rule = config.rules[i];
+      if (typeof rule.condition !== 'function' || !rule.text || typeof rule.text !== 'object') {
+        return new Error(`Rule at index ${i} must have a condition function and a text object.`);
       }
     }
 

@@ -7,8 +7,8 @@ export default class DateIntervalCalculator {
 
   private static readonly SECONDS_IN_MINUTE = 60;
 
-  public static getDateInterval(date: Date): DateInterval {
-    let diff = (Date.now() - date.getTime()) / 1000;
+  public static getDateInterval(date: Date, now: number = Date.now()): DateInterval {
+    let diff = (now - date.getTime()) / 1000;
 
     const diffDays = Math.trunc(diff / DateIntervalCalculator.SECONDS_IN_DAY);
     diff -= DateIntervalCalculator.SECONDS_IN_DAY * diffDays;
