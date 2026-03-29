@@ -7,5 +7,4 @@ const CleverDate = {
   stop: app.stop.bind(app)
 };
 
-module.exports = CleverDate;
 export default CleverDate;

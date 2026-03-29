@@ -8,14 +8,14 @@ jobs:
     name: deploy-gh-page
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v6
       - run: mkdir ./example/clever-date
       - run: npm install
       - run: npm run build
       - run: cp -r ./dist/* ./example/
       - name: deploy
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.PUBLISH_DIST_DEPLOY_KEY }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./example
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.PUBLISH_DIST_DEPLOY_KEY }}
+          publish_branch: gh-pages
+          publish_dir: ./example
