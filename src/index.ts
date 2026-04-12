@@ -2,9 +2,9 @@ import App from './App';
 
 const app = new App();
 
-const CleverDate = {
+const DomTimeago = {
   start: app.start.bind(app),
   stop: app.stop.bind(app)
 };
 
-export default CleverDate;
+export default DomTimeago;

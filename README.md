@@ -1,117 +1,136 @@
-# Clever Date
+# @date-js/dom-timeago
 
-![npm](https://img.shields.io/npm/v/@date-js/clever-date?style=flat-square)
-![npm](https://img.shields.io/npm/dt/@date-js/clever-date?style=flat-square)
-![starts](https://img.shields.io/github/stars/date-js/clever-date?style=flat-square)
+[![npm](https://img.shields.io/npm/v/@date-js/dom-timeago?style=flat-square)](https://www.npmjs.com/package/@date-js/dom-timeago)
+[![size](https://img.shields.io/bundlephobia/minzip/@date-js/dom-timeago?style=flat-square&label=gzip)](https://bundlephobia.com/package/@date-js/dom-timeago)
+[![stars](https://img.shields.io/github/stars/date-js/dom-timeago?style=flat-square)](https://github.com/date-js/dom-timeago)
 
-A javascript library (<10kB) to show an intelligent date refreshed at regular intervals.
+**One attribute. Live, human-readable dates. Zero boilerplate.**
 
-## Demo
-A demo is available [here](https://date-js.github.io/clever-date/).
-
-## Supported languages
-Languages defined bellow are fully supported but you can add your own rules with other languages.
-- English
-- Français
-
-You can also contribute and suggest translations with a pull request.
-
-## Example
-
-Add an attribute to your date with the corresponding timestamp.
-``` html
-<div data-clever-date="1579950627">26/01/2020 12h12</div>
-<div data-clever-date="1580037027">25/01/2020 12h12</div>
+```html
+<span data-timeago="1579950627">26/01/2020</span>
+<!-- becomes → "2 minutes ago", then "Today at 12:10", then "Yesterday at 12:10"… automatically -->
 ```
 
-Start the script:
-``` javascript
-CleverDate.start();
+→ **[Live demo](https://date-js.github.io/dom-timeago/)**
+
+---
+
+## Why @date-js/dom-timeago?
+
+Most relative-date libraries give you a formatting function. You call it once, you get a string, and you're on your own: looping over elements, setting up timers, deciding when to re-render.
+
+@date-js/dom-timeago works differently. Put a timestamp in an attribute, call `DomTimeago.start()` once, and every date on the page stays current on its own.
+
+**What sets it apart:**
+
+- **HTML-first**: no JS per element. One attribute, one `start()` call, done
+- **Smart per-item scheduling**: each rule sets its own refresh interval. "30 seconds ago" re-evaluates on the next tick; "March 12" never re-evaluates. Items that no longer need updates are dropped from tracking entirely
+- **Rule-based rendering**: the display logic is a plain list of conditions you fully control. Override a default, add your own, or replace them all
+- **Auto-discovery**: dynamically added elements are picked up automatically via MutationObserver, works seamlessly in SPAs
+- **Tiny**: ~3 KB gzipped
+- **Multilingual**: extensible to any locale by adding a key in each rule's `text`
+
+---
+
+## Install & Usage
+
+### npm / bundler
+
+```bash
+npm install @date-js/dom-timeago
 ```
 
-Let's see the result:
-``` html
-<div title="26/01/2020 12h12">2 minutes ago</div>
-<div title="25/01/2020 12h12">Yesterday at 12:12</div>
+```js
+import DomTimeago from '@date-js/dom-timeago';
+DomTimeago.start();
 ```
 
-### Some possible results:
-- Just now / A l'instant
-- 2 minutes ago / Il y a 2 minutes
-- 2 hours ago / Il y a 2 heures
-- Today at 11:46 / Aujourd'hui à 11h46
-- Yesterday at 11:46 / Hier à 11h46
+### `<script>` tag, UMD (CDN)
 
-## Install
+No build step. `DomTimeago` is available as a global.
 
-### ES6
-
-``` bash
-npm install @date-js/clever-date
+```html
+<script src="https://cdn.jsdelivr.net/npm/@date-js/dom-timeago@3/dist/dom-timeago.umd.js"></script>
+<script>
+  DomTimeago.start();
+</script>
 ```
 
-``` javascript
-import CleverDate from '@date-js/clever-date';
+### `<script type="module">`, ESM (CDN)
+
+```html
+<script type="module">
+  import DomTimeago from 'https://cdn.jsdelivr.net/npm/@date-js/dom-timeago@3/dist/dom-timeago.esm.js';
+  DomTimeago.start();
+</script>
 ```
 
-### Otherwise
+---
 
-``` html
-<script src="https://cdn.jsdelivr.net/npm/@date-js/clever-date@2.0"></script>
+In all cases, the original content is preserved as a `title` attribute, and the element updates live:
+
+```html
+<span title="26/01/2020 12h10">2 minutes ago</span>
 ```
 
-## Usage
-Start the process :
-``` javascript
-CleverDate.start();
+Stop it anytime:
+
+```js
+DomTimeago.stop();
 ```
 
-Stop the process:
-``` javascript
-CleverDate.stop();
+## Configuration
+
+```js
+DomTimeago.start({
+  refresh: 5,            // global re-render interval in seconds (default: 5)
+  selector: 'data-timeago', // attribute to look for (default: 'data-timeago')
+  rules: [],             // custom rules, evaluated before defaults
+});
 ```
 
-If you add element dynamically.
-``` javascript
-window.dispatch(new Event('clever-date.update'));
+## Custom rules
+
+Rules are evaluated in order; the first matching one wins. Each rule defines **when** it applies, **what** to display, and **how often** to refresh.
+
+```js
+DomTimeago.start({
+// or DomTimeago.start({
+  rules: [
+    {
+      condition: (interval) => interval.day >= 365 * 10,
+      refresh: null, // never re-renders
+      text: {
+        en: "%dd day{%dd||s} ago (year %Y)",
+        fr: "il y a %dd jour{%dd||s} (année %Y)",
+      }
+    }
+  ]
+});
 ```
 
-## Customize it
+Custom rules are evaluated **before** the defaults; the first matching rule wins.
 
-You have the full possibility to customize your rules by passing your configuration.
+See all default rules in [src/defaultRules.ts](src/defaultRules.ts) and the `DateInterval` shape in [src/DateInterval/DateInterval.ts](src/DateInterval/DateInterval.ts).
 
-``` javascript
-var configuration = {
-    refresh: 5, // The minimal refreshing time
-    selector: 'data-clever-date', // Elements with this attribute will be parsed
-    rules: [
-        {
-             condition: function(dateIntervalItem) { return dateIntervalItem.day >= 365*10; }, text: {
-                 fr: "Il y a %dd jour{%dd||s} (année %Y)",
-                 en: "%dd day{%dd||s} ago (year %Y)"
-             }
-        }
-    ]
-}
+### Rule properties
 
-CleverDate.start(configuration);
-```
+| Property | Type | Description |
+|---|---|---|
+| `condition` | `(interval: DateInterval) => boolean` | Returns `true` if this rule applies. `interval` contains `day`, `hour`, `minute`, `second` (elapsed) and `date` (original `Date`) |
+| `text` | `Record<string, string>` | Locale-keyed display templates. A rule is skipped if the current locale key is missing |
+| `refresh` | `number \| null \| undefined` | Seconds until next render (`null` = never, `undefined` = global interval) |
 
-## How create rules ?
+### Template tokens
 
-You can see examples in [default rules file](src/defaultRules.ts).
+**Interval tokens** (elapsed time): `%ds` seconds · `%dm` minutes · `%dh` hours · `%dd` days
 
-A rule is composed of some elements:
+**Date tokens** (formatted via [@date-js/date-formatter](https://github.com/date-js/date-formatter)): `%H` hour · `%i` minutes · `%d` day · `%j` day (no leading zero) · `%F` month name · `%Y` year · `%l` weekday
 
-##### condition
-A callback which returns true if the rule matches.\
-DateInterval is injected in the callback: see [DateInterval.ts](src/DateInterval/DateInterval.ts) for more information.
+Pluralization: `{%dd|singular|plural}`
 
-##### refresh
-For improving performances, it's not necessary to analyse and parse your rule each time.
-- null: never analysed again
-- undefined: use default refreshing time
-- number: seconds between analyses
+## Languages
 
-##### text
-An object with the text for each language that you want to target.
+Built-in: `en`, `fr` — detected automatically from `navigator.language`.
+
+To add a language, include a key in each rule's `text` object matching the locale code (e.g. `"de"`, `"es"`).

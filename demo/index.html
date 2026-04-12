@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clever Date — Live Demo</title>
+    <title>@date-js/dom-timeago — Live Demo</title>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -152,22 +152,22 @@
             .grid { grid-template-columns: 1fr; }
         }
     </style>
-    <script src="clever-date.js"></script>
+    <script src="dom-timeago.umd.js"></script>
 </head>
 <body>
 
     <header class="hero">
-        <h1>Clever Date</h1>
+        <h1>@date-js/dom-timeago</h1>
         <p class="tagline">A tiny JavaScript library that transforms timestamps into live, human-readable relative dates.</p>
         <div class="badges">
-            <img src="https://img.shields.io/npm/v/@date-js/clever-date?style=flat-square&colorA=1e293b&colorB=6366f1" alt="npm version">
+            <img src="https://img.shields.io/npm/v/@date-js/dom-timeago?style=flat-square&colorA=1e293b&colorB=6366f1" alt="npm version">
 
-            <img src="https://img.shields.io/github/stars/date-js/clever-date?style=flat-square&colorA=1e293b&colorB=6366f1" alt="github stars">
-            <img src="https://img.shields.io/bundlephobia/minzip/@date-js/clever-date?style=flat-square&colorA=1e293b&colorB=6366f1&label=size" alt="bundle size">
+            <img src="https://img.shields.io/github/stars/date-js/dom-timeago?style=flat-square&colorA=1e293b&colorB=6366f1" alt="github stars">
+            <img src="https://img.shields.io/bundlephobia/minzip/@date-js/dom-timeago?style=flat-square&colorA=1e293b&colorB=6366f1&label=size" alt="bundle size">
         </div>
         <div class="links">
-            <a href="https://github.com/date-js/clever-date">GitHub</a>
-            <a href="https://www.npmjs.com/package/@date-js/clever-date">npm</a>
+            <a href="https://github.com/date-js/dom-timeago">GitHub</a>
+            <a href="https://www.npmjs.com/package/@date-js/dom-timeago">npm</a>
         </div>
     </header>
 
@@ -176,47 +176,47 @@
         <div class="grid">
             <div class="card">
                 <div class="label">Just now</div>
-                <div class="value" id="demo-justnow" data-clever-date="0"></div>
+                <div class="value" id="demo-justnow" data-timeago="0"></div>
                 <div class="raw" id="raw-justnow"></div>
             </div>
             <div class="card">
                 <div class="label">Seconds ago</div>
-                <div class="value" id="demo-seconds" data-clever-date="0"></div>
+                <div class="value" id="demo-seconds" data-timeago="0"></div>
                 <div class="raw" id="raw-seconds"></div>
             </div>
             <div class="card">
                 <div class="label">Minutes ago</div>
-                <div class="value" id="demo-minutes" data-clever-date="0"></div>
+                <div class="value" id="demo-minutes" data-timeago="0"></div>
                 <div class="raw" id="raw-minutes"></div>
             </div>
             <div class="card">
                 <div class="label">Hours ago</div>
-                <div class="value" id="demo-hours" data-clever-date="0"></div>
+                <div class="value" id="demo-hours" data-timeago="0"></div>
                 <div class="raw" id="raw-hours"></div>
             </div>
             <div class="card">
                 <div class="label">Today</div>
-                <div class="value" id="demo-today" data-clever-date="0"></div>
+                <div class="value" id="demo-today" data-timeago="0"></div>
                 <div class="raw" id="raw-today"></div>
             </div>
             <div class="card">
                 <div class="label">Yesterday</div>
-                <div class="value" id="demo-yesterday" data-clever-date="0"></div>
+                <div class="value" id="demo-yesterday" data-timeago="0"></div>
                 <div class="raw" id="raw-yesterday"></div>
             </div>
             <div class="card">
                 <div class="label">Days ago</div>
-                <div class="value" id="demo-days" data-clever-date="0"></div>
+                <div class="value" id="demo-days" data-timeago="0"></div>
                 <div class="raw" id="raw-days"></div>
             </div>
             <div class="card">
                 <div class="label">Same year</div>
-                <div class="value" id="demo-sameyear" data-clever-date="0"></div>
+                <div class="value" id="demo-sameyear" data-timeago="0"></div>
                 <div class="raw" id="raw-sameyear"></div>
             </div>
             <div class="card">
                 <div class="label">Older</div>
-                <div class="value" id="demo-older" data-clever-date="0"></div>
+                <div class="value" id="demo-older" data-timeago="0"></div>
                 <div class="raw" id="raw-older"></div>
             </div>
         </div>
@@ -227,7 +227,7 @@
         <div class="grid" style="margin-bottom: 1.5rem;">
             <div class="card custom">
                 <div class="label">10+ years ago (custom)</div>
-                <div class="value" id="demo-custom" data-clever-date="0"></div>
+                <div class="value" id="demo-custom" data-timeago="0"></div>
                 <div class="raw" id="raw-custom"></div>
             </div>
         </div>
@@ -243,12 +243,12 @@
             &nbsp;&nbsp;&nbsp;&nbsp;}<br>
             &nbsp;&nbsp;}]<br>
             };<br><br>
-            <span class="fn">CleverDate</span>.<span class="fn">start</span>(config);
+            <span class="fn">DateJs</span>.            <span class="fn">DomTimeago</span>.<span class="fn">start</span>(config);
         </div>
     </section>
 
     <footer>
-        <a href="https://github.com/date-js/clever-date">date-js/clever-date</a> &mdash; MIT License
+        <a href="https://github.com/date-js/dom-timeago">date-js/dom-timeago</a> &mdash; MIT License
     </footer>
 
     <script>
@@ -276,12 +276,12 @@
         }
 
         for (const [id, ts] of Object.entries(timestamps)) {
-            document.getElementById(id).setAttribute('data-clever-date', Math.floor(ts));
+            document.getElementById(id).setAttribute('data-timeago', Math.floor(ts));
             const rawId = 'raw-' + id.replace('demo-', '');
             document.getElementById(rawId).textContent = formatDate(ts);
         }
 
-        CleverDate.start({
+        DomTimeago.start({
             rules: [{
                 condition: function(dateInterval) { return dateInterval.day >= 365 * 10; },
                 text: {

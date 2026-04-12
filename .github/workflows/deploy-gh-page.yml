@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: mkdir ./demo/clever-date
+      - run: mkdir ./demo/dom-timeago
       - run: npm install
       - run: npm run build
       - run: cp -r ./dist/* ./demo/
