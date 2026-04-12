@@ -17,6 +17,8 @@ export default class ItemManager {
   }
 
   public analyse(rules: Rule[]): void {
+    this.items = this.items.filter(item => document.contains(item.reference));
+
     const currentDate = new Date();
 
     const itemsToAnalyse = this.items.filter(
