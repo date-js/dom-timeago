@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: mkdir ./example/clever-date
+      - run: mkdir ./demo/clever-date
       - run: npm install
       - run: npm run build
-      - run: cp -r ./dist/* ./example/
+      - run: cp -r ./dist/* ./demo/
       - name: deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           deploy_key: ${{ secrets.PUBLISH_DIST_DEPLOY_KEY }}
           publish_branch: gh-pages
-          publish_dir: ./example
+          publish_dir: ./demo
