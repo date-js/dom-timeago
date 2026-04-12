@@ -131,6 +131,6 @@ Pluralization: `{%dd|singular|plural}`
 
 ## Languages
 
-Built-in: `en`, `fr` — detected automatically from `navigator.language`.
+Detected automatically from `navigator.language`.
 
 To add a language, include a key in each rule's `text` object matching the locale code (e.g. `"de"`, `"es"`).
