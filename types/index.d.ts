@@ -1,5 +1,5 @@
-declare const CleverDate: {
+declare const DomTimeago: {
     start: (userConfig?: import("./Configuration/Configuration").default | null) => void;
     stop: () => void;
 };
-export default CleverDate;
+export default DomTimeago;
