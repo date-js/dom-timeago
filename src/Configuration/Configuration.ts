@@ -9,7 +9,7 @@ export default class Configuration {
   /**
    * Selector used to find date to manage
    */
-  public selector = 'data-clever-date';
+  public selector = 'data-timeago';
 
   /**
    * Set of rules merged in default rules

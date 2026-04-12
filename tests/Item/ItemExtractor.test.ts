@@ -3,7 +3,7 @@
  */
 import ItemExtractor from '../../src/Item/ItemExtractor';
 
-const SELECTOR = 'data-clever-date';
+const SELECTOR = 'data-timeago';
 
 function createElement(attrValue: string, existingTitle?: string): Element {
   const el = document.createElement('span');
@@ -72,8 +72,8 @@ describe('ItemExtractor.extract', () => {
   it('extracts all matching descendant elements', () => {
     const container = document.createElement('div');
     container.innerHTML = `
-      <span data-clever-date="2024-06-15T10:00:00.000Z"></span>
-      <span data-clever-date="2024-06-14T10:00:00.000Z"></span>
+      <span data-timeago="2024-06-15T10:00:00.000Z"></span>
+      <span data-timeago="2024-06-14T10:00:00.000Z"></span>
     `;
     const items = ItemExtractor.extract(SELECTOR, container);
     expect(items).toHaveLength(2);
@@ -89,8 +89,8 @@ describe('ItemExtractor.extract', () => {
   it('skips elements with an invalid date', () => {
     const container = document.createElement('div');
     container.innerHTML = `
-      <span data-clever-date="not-a-date"></span>
-      <span data-clever-date="2024-06-15T10:00:00.000Z"></span>
+      <span data-timeago="not-a-date"></span>
+      <span data-timeago="2024-06-15T10:00:00.000Z"></span>
     `;
     const items = ItemExtractor.extract(SELECTOR, container);
     expect(items).toHaveLength(1);

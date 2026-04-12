@@ -1,8 +1,16 @@
 {
-  "name": "@date-js/clever-date",
+  "name": "@date-js/dom-timeago",
   "version": "0.0.0-version",
-  "description": "A Javascript module to show an intelligent date refreshed at regular intervals.",
-  "main": "dist/clever-date.js",
+  "description": "Lightweight relative-time library for the DOM — live auto-refresh with smart per-rule intervals and full customization.",
+  "main": "dist/dom-timeago.umd.js",
+  "module": "dist/dom-timeago.esm.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/dom-timeago.esm.js",
+      "require": "./dist/dom-timeago.umd.js"
+    }
+  },
   "scripts": {
     "prepublishOnly": "webpack --mode production",
     "eslint": "eslint ./src",
@@ -25,24 +33,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/date-js/clever-date.git"
+    "url": "git+https://github.com/date-js/dom-timeago.git"
   },
   "keywords": [
-    "date",
-    "hour",
-    "day",
-    "month",
-    "year",
-    "intelligent",
-    "clever",
-    "refresh",
-    "realtime",
-    "human",
-    "pretty",
+    "ago",
+    "relative",
+    "time-ago",
     "time",
-    "update",
+    "relative-time",
+    "relative-date",
+    "human-readable",
+    "live",
+    "auto-refresh",
+    "real-time",
+    "timestamp",
+    "dom",
+    "vanilla",
+    "lightweight",
     "tiny",
-    "light"
+    "browser",
+    "date",
+    "spa"
   ],
   "files": [
     "dist"
@@ -51,9 +62,9 @@
   "author": "Adrien Peyre",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/date-js/clever-date/issues"
+    "url": "https://github.com/date-js/dom-timeago/issues"
   },
-  "homepage": "https://github.com/date-js/clever-date#readme",
+  "homepage": "https://github.com/date-js/dom-timeago#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "eslint": "^9.0.0",
