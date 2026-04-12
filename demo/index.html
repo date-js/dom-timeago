@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clever Date — Live Demo</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        a { color: #818cf8; text-decoration: none; transition: color .2s; }
+        a:hover { color: #a5b4fc; }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 4rem 1.5rem 2.5rem;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #818cf8, #6366f1, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .tagline {
+            font-size: 1.15rem;
+            color: #94a3b8;
+            margin-top: .5rem;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero .badges {
+            display: flex;
+            gap: .6rem;
+            justify-content: center;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .hero .badges img { height: 22px; }
+        .hero .links {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            margin-top: 1.2rem;
+            font-size: .95rem;
+        }
+        .hero .links a {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+        }
+
+        /* Grid */
+        .demo-section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+        .demo-section h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 1.2rem;
+            padding-left: .25rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            transition: transform .2s, border-color .2s, box-shadow .2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: #6366f1;
+            box-shadow: 0 4px 24px rgba(99, 102, 241, .15);
+        }
+        .card .label {
+            font-size: .75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: #6366f1;
+            margin-bottom: .5rem;
+        }
+        .card .value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            min-height: 1.8em;
+        }
+        .card .raw {
+            font-size: .78rem;
+            color: #64748b;
+            margin-top: .4rem;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+        }
+
+        .card.custom {
+            border-color: #4f46e5;
+            background: linear-gradient(135deg, #1e293b 60%, #312e81);
+        }
+        .card.custom .label { color: #a5b4fc; }
+
+        /* Custom rule code */
+        .code-block {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: .85rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            overflow-x: auto;
+        }
+        .code-block .kw { color: #c084fc; }
+        .code-block .fn { color: #67e8f9; }
+        .code-block .str { color: #86efac; }
+        .code-block .num { color: #fbbf24; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem 3rem;
+            color: #475569;
+            font-size: .85rem;
+            border-top: 1px solid #1e293b;
+        }
+        footer a { color: #64748b; }
+        footer a:hover { color: #94a3b8; }
+
+        @media (max-width: 600px) {
+            .hero { padding: 3rem 1rem 2rem; }
+            .hero h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script src="clever-date.js"></script>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Clever Date</h1>
+        <p class="tagline">A tiny JavaScript library that transforms timestamps into live, human-readable relative dates.</p>
+        <div class="badges">
+            <img src="https://img.shields.io/npm/v/@date-js/clever-date?style=flat-square&colorA=1e293b&colorB=6366f1" alt="npm version">
+
+            <img src="https://img.shields.io/github/stars/date-js/clever-date?style=flat-square&colorA=1e293b&colorB=6366f1" alt="github stars">
+            <img src="https://img.shields.io/bundlephobia/minzip/@date-js/clever-date?style=flat-square&colorA=1e293b&colorB=6366f1&label=size" alt="bundle size">
+        </div>
+        <div class="links">
+            <a href="https://github.com/date-js/clever-date">GitHub</a>
+            <a href="https://www.npmjs.com/package/@date-js/clever-date">npm</a>
+        </div>
+    </header>
+
+    <section class="demo-section">
+        <h2>Default Rules</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="label">Just now</div>
+                <div class="value" id="demo-justnow" data-clever-date="0"></div>
+                <div class="raw" id="raw-justnow"></div>
+            </div>
+            <div class="card">
+                <div class="label">Seconds ago</div>
+                <div class="value" id="demo-seconds" data-clever-date="0"></div>
+                <div class="raw" id="raw-seconds"></div>
+            </div>
+            <div class="card">
+                <div class="label">Minutes ago</div>
+                <div class="value" id="demo-minutes" data-clever-date="0"></div>
+                <div class="raw" id="raw-minutes"></div>
+            </div>
+            <div class="card">
+                <div class="label">Hours ago</div>
+                <div class="value" id="demo-hours" data-clever-date="0"></div>
+                <div class="raw" id="raw-hours"></div>
+            </div>
+            <div class="card">
+                <div class="label">Today</div>
+                <div class="value" id="demo-today" data-clever-date="0"></div>
+                <div class="raw" id="raw-today"></div>
+            </div>
+            <div class="card">
+                <div class="label">Yesterday</div>
+                <div class="value" id="demo-yesterday" data-clever-date="0"></div>
+                <div class="raw" id="raw-yesterday"></div>
+            </div>
+            <div class="card">
+                <div class="label">Days ago</div>
+                <div class="value" id="demo-days" data-clever-date="0"></div>
+                <div class="raw" id="raw-days"></div>
+            </div>
+            <div class="card">
+                <div class="label">Same year</div>
+                <div class="value" id="demo-sameyear" data-clever-date="0"></div>
+                <div class="raw" id="raw-sameyear"></div>
+            </div>
+            <div class="card">
+                <div class="label">Older</div>
+                <div class="value" id="demo-older" data-clever-date="0"></div>
+                <div class="raw" id="raw-older"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <h2>Custom Rule</h2>
+        <div class="grid" style="margin-bottom: 1.5rem;">
+            <div class="card custom">
+                <div class="label">10+ years ago (custom)</div>
+                <div class="value" id="demo-custom" data-clever-date="0"></div>
+                <div class="raw" id="raw-custom"></div>
+            </div>
+        </div>
+        <div class="code-block">
+            <span class="kw">const</span> config = {<br>
+            &nbsp;&nbsp;rules: [{<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;condition: <span class="kw">function</span>(<span class="fn">dateInterval</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">dateInterval</span>.day &gt;= <span class="num">365</span> * <span class="num">10</span>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;},<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;text: {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fr: <span class="str">"%dd jour{%dd||s} (ann&eacute;e %Y)"</span>,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;en: <span class="str">"%dd day{%dd||s} ago (year %Y)"</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}]<br>
+            };<br><br>
+            <span class="fn">CleverDate</span>.<span class="fn">start</span>(config);
+        </div>
+    </section>
+
+    <footer>
+        <a href="https://github.com/date-js/clever-date">date-js/clever-date</a> &mdash; MIT License
+    </footer>
+
+    <script>
+        const now = Date.now() / 1000;
+
+        const timestamps = {
+            'demo-justnow':   now - 15,
+            'demo-seconds':   now - 45,
+            'demo-minutes':   now - 8 * 60,
+            'demo-hours':     now - 3 * 3600,
+            'demo-today':     now - 10 * 3600,
+            'demo-yesterday': now - 28 * 3600,
+            'demo-days':      now - 4 * 86400,
+            'demo-sameyear':  now - 60 * 86400,
+            'demo-older':     now - 800 * 86400,
+            'demo-custom':    now - 365 * 12 * 86400,
+        };
+
+        function formatDate(ts) {
+            const d = new Date(ts * 1000);
+            return d.toLocaleDateString(undefined, {
+                year: 'numeric', month: 'short', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        for (const [id, ts] of Object.entries(timestamps)) {
+            document.getElementById(id).setAttribute('data-clever-date', Math.floor(ts));
+            const rawId = 'raw-' + id.replace('demo-', '');
+            document.getElementById(rawId).textContent = formatDate(ts);
+        }
+
+        CleverDate.start({
+            rules: [{
+                condition: function(dateInterval) { return dateInterval.day >= 365 * 10; },
+                text: {
+                    fr: "%dd jour{%dd||s} (année %Y)",
+                    en: "%dd day{%dd||s} ago (year %Y)"
+                }
+            }]
+        });
+    </script>
+</body>
+</html>

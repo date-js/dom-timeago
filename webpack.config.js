@@ -27,7 +27,7 @@ const config = {
   devServer: {
     host: '0.0.0.0',
     static: [
-      path.join(__dirname, 'example'),
+      path.join(__dirname, 'demo'),
     ],
   },
 };
