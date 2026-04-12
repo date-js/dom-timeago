@@ -6,13 +6,14 @@ import ConfigurationValidator from './Configuration/ConfigurationValidator';
 import LocaleManager from './Locale/LocaleManager';
 import ItemExtractor from './Item/ItemExtractor';
 import ItemManager from './Item/ItemManager';
+import ItemObserver from './Item/ItemObserver';
 
 export default class App {
-  private static readonly EVENT_REFRESH = 'clever-date.update';
-
   private rules: Rule[] = [];
 
   private timer: number | null = null;
+
+  private readonly observer = new ItemObserver();
 
   private readonly itemManager: ItemManager;
 
@@ -31,18 +32,18 @@ export default class App {
 
     this.rules = config.rules;
 
-    const execProcess = (): void => {
-      this.itemManager.addItems(ItemExtractor.extract(config.selector));
+    this.itemManager.addItems(ItemExtractor.extract(config.selector));
+
+    this.observer.start(config.selector, items => {
+      this.itemManager.addItems(items);
       this.itemManager.analyse(this.rules);
-    };
+    });
 
     if (this.timer === null) {
-      this.timer = this.startTimer(config.refresh, execProcess);
+      this.timer = this.startTimer(config.refresh, () => this.itemManager.analyse(this.rules));
     }
 
-    window.addEventListener(App.EVENT_REFRESH, () => execProcess());
-
-    execProcess();
+    this.itemManager.analyse(this.rules);
   }
 
   public stop(): void {
@@ -50,6 +51,7 @@ export default class App {
       window.clearInterval(this.timer);
       this.timer = null;
     }
+    this.observer.stop();
   }
 
   private startTimer(interval: number, callback: () => void): number {
