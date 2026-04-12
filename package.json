@@ -9,7 +9,19 @@
     "eslint-fix": "eslint ./src --fix",
     "watch": "webpack --watch",
     "build": "webpack",
-    "start:dev": "webpack serve --mode development"
+    "start:dev": "webpack serve --mode development",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.ts"
+    ],
+    "setupFiles": [
+      "./tests/jest.setup.ts"
+    ]
   },
   "repository": {
     "type": "git",
@@ -43,8 +55,12 @@
   },
   "homepage": "https://github.com/date-js/clever-date#readme",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "eslint": "^9.0.0",
     "globals": "^15.0.0",
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "ts-jest": "^29.4.9",
     "ts-loader": "^9.2.3",
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.0.0",
