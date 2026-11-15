@@ -127,7 +127,12 @@ See all default rules in [src/defaultRules.ts](src/defaultRules.ts) and the `Dat
 
 **Date tokens** (formatted via [@date-js/date-formatter](https://github.com/date-js/date-formatter)): `%H` hour · `%i` minutes · `%d` day · `%j` day (no leading zero) · `%F` month name · `%Y` year · `%l` weekday
 
-Pluralization: `{%dd|singular|plural}`
+Pluralization:
+
+- `{%dd|singular|plural}` — singular when the value is ≤ 1 (enough for English, French, etc.)
+- `{%dd|one:…|few:…|many:…|other:…}` — for languages with more forms. The branch is picked from the locale's plural category given by [`Intl.PluralRules`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) (`zero`, `one`, `two`, `few`, `many`, `other`); missing categories fall back to `other`. Branches may contain tokens, e.g. Arabic: `منذ {%dm|one:دقيقة|two:دقيقتين|few:%dm دقائق|other:%dm دقيقة}`. On browsers without `Intl.PluralRules`, `one` is used for values ≤ 1 and `other` otherwise.
+
+Inside a pluralization block, the characters `|`, `{`, `}`, `[` and `]` are reserved and cannot be used in a branch. Colons are allowed (only the first `:` after a category name acts as separator), e.g. `{%dh|one:at 1:00|other:at %dh:00}`.
 
 ## Languages
 

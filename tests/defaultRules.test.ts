@@ -1,5 +1,6 @@
 import DateInterval from '../src/DateInterval/DateInterval';
 import defaultRules from '../src/defaultRules';
+import RuleTemplateParser from '../src/Rule/RuleTemplateParser';
 
 const makeInterval = (date: Date, day = 0, hour = 0, minute = 0, second = 0): DateInterval =>
   new DateInterval(date, day, hour, minute, second);
@@ -91,5 +92,51 @@ describe('defaultRules — available locales', () => {
       expect(rule.text).toHaveProperty('en', expect.any(String));
       expect(rule.text).toHaveProperty('fr', expect.any(String));
     });
+  });
+});
+
+describe('defaultRules — locale plural forms', () => {
+  const render = (ruleIndex: number, locale: string, interval: DateInterval): string =>
+    RuleTemplateParser.parse((defaultRules[ruleIndex].text as Record<string, string>)[locale], interval, locale);
+  const seconds = (locale: string, n: number) => render(1, locale, makeInterval(now, 0, 0, 0, n));
+  const minutes = (locale: string, n: number) => render(2, locale, makeInterval(now, 0, 0, n, 0));
+  const hours = (locale: string, n: number) => render(3, locale, makeInterval(now, 0, n, 0, 0));
+
+  it('ru: uses one / few / many noun forms', () => {
+    expect(seconds('ru', 31)).toBe('31 секунду назад');
+    expect(seconds('ru', 42)).toBe('42 секунды назад');
+    expect(seconds('ru', 45)).toBe('45 секунд назад');
+    expect(minutes('ru', 1)).toBe('1 минуту назад');
+    expect(minutes('ru', 2)).toBe('2 минуты назад');
+    expect(minutes('ru', 21)).toBe('21 минуту назад');
+    expect(minutes('ru', 11)).toBe('11 минут назад');
+    expect(hours('ru', 1)).toBe('1 час назад');
+    expect(hours('ru', 2)).toBe('2 часа назад');
+    expect(hours('ru', 5)).toBe('5 часов назад');
+  });
+
+  it('ar: uses singular, dual, plural (3-10) and 11+ forms', () => {
+    expect(minutes('ar', 1)).toBe('منذ دقيقة');
+    expect(minutes('ar', 2)).toBe('منذ دقيقتين');
+    expect(minutes('ar', 5)).toBe('منذ 5 دقائق');
+    expect(minutes('ar', 21)).toBe('منذ 21 دقيقة');
+    expect(hours('ar', 1)).toBe('منذ ساعة');
+    expect(hours('ar', 2)).toBe('منذ ساعتين');
+    expect(hours('ar', 5)).toBe('منذ 5 ساعات');
+    expect(hours('ar', 11)).toBe('منذ 11 ساعة');
+    expect(seconds('ar', 45)).toBe('منذ 45 ثانية');
+  });
+
+  it('mr / sw / ta / te / ur: use the singular form for 1', () => {
+    expect(minutes('mr', 1)).toBe('1 मिनिटापूर्वी');
+    expect(minutes('mr', 5)).toBe('5 मिनिटांपूर्वी');
+    expect(hours('sw', 1)).toBe('saa 1 iliyopita');
+    expect(hours('sw', 5)).toBe('masaa 5 yaliyopita');
+    expect(minutes('sw', 1)).toBe('dakika 1 iliyopita');
+    expect(minutes('ta', 1)).toBe('1 நிமிடத்திற்கு முன்');
+    expect(hours('te', 1)).toBe('1 గంట క్రితం');
+    expect(hours('te', 3)).toBe('3 గంటల క్రితం');
+    expect(hours('ur', 1)).toBe('1 گھنٹہ پہلے');
+    expect(hours('ur', 4)).toBe('4 گھنٹے پہلے');
   });
 });
